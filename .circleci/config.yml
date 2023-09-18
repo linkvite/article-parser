@@ -1,0 +1,57 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2 # See https://circleci.com/developer/orbs/orb/circleci/slack for details
+
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: oven/bun
+    steps:
+      - checkout
+      - restore_cache:
+          keys: 
+            - v1-dependencies-{{ checksum "bun.lockb" }}
+      - run:
+          name: Install dependencies
+          command: bun install
+      - run:
+          name: Download linter
+          command: bun add eslint
+      - run:
+          name: Run linter
+          command: eslint . --ext .ts
+      - run:
+          name: Run tests
+          command: bun test
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/base:2022.12
+    steps:
+      - checkout
+      - run:
+          name: Deploy to VPS
+          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - slack/status:
+          fail_only: true
+          failure_message: ":x: *Deployment Failed for App: $CIRCLE_PROJECT_REPONAME*"
+          webhook: $SLACK_WEBHOOK
+      - slack/status:
+          fail_only: false
+          success_message: ":tada: *Deployment Live for App: $CIRCLE_PROJECT_REPONAME*"
+          webhook: $SLACK_WEBHOOK
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          context: LinkviteCTX
+          requires:
+            - build
+          filters:
+            branches:
+              only: main

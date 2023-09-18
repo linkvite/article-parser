@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  cultus:
+    container_name: parser
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    environment:
+      - PORT=9090
