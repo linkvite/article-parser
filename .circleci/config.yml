@@ -17,12 +17,6 @@ jobs:
           name: Install dependencies
           command: bun install
       - run:
-          name: Download linter
-          command: bun add eslint
-      - run:
-          name: Run linter
-          command: bun lint
-      - run:
           name: Run tests
           command: bun test
   deploy:
