@@ -21,7 +21,7 @@ jobs:
           command: bun add eslint
       - run:
           name: Run linter
-          command: eslint . --ext .ts
+          command: bun lint
       - run:
           name: Run tests
           command: bun test
