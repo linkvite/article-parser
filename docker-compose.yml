@@ -1,5 +1,9 @@
 version: '3.9'
 
+networks:
+  cultus:
+    driver: bridge
+
 services:
   parser:
     container_name: parser
@@ -11,3 +15,5 @@ services:
     restart: unless-stopped
     environment:
       - PORT=9090
+    networks:
+      - cultus
