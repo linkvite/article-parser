@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  parser:
+  cultus:
     container_name: parser
     build:
       context: .
