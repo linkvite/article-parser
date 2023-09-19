@@ -11,5 +11,3 @@ services:
     restart: unless-stopped
     environment:
       - PORT=9090
-    networks:
-      - cultus
