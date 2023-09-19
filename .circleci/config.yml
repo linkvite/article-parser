@@ -27,7 +27,7 @@ jobs:
       - checkout
       - run:
           name: Deploy to VPS
-          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+          command: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy-parser.sh"
       - slack/status:
           fail_only: true
           failure_message: ":x: *Deployment Failed for App: $CIRCLE_PROJECT_REPONAME*"

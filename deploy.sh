@@ -4,7 +4,7 @@
 echo "Starting deployment..."
 
 #replace this with the path of your project on the VPS
-cd ~/cultus
+cd ~/article-parser
 
 # pull the latest changes
 git pull origin main
