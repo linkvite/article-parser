@@ -2,8 +2,7 @@ version: '3.9'
 
 networks:
   cultus:
-    external:
-      name: common_network
+    name: common_network
 
 services:
   parser:
